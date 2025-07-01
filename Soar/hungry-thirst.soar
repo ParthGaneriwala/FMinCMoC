@@ -1,0 +1,63 @@
+waitsnc --on
+decide indifferent-selection --first
+sp {propose*initialize
+   (state <s> ^superstate nil
+             -^hungry
+             -^thirsty)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name initialize)
+}
+
+
+sp {apply*initialize
+    (state <s> ^operator <op>)
+    (<op> ^name initialize)
+-->
+    (<s> ^hungry yes)
+    (<s> ^thirsty yes)
+    (write (crlf) |Count in top-state using operators.|)
+
+}
+
+sp {propose*hungry
+   (state <s> ^hungry yes)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name hungry)
+}
+
+sp {apply*hungry
+    (state <s> ^operator.name hungry)
+-->
+   (<s> ^hungry no)
+}
+
+sp {propose*thirsty
+   (state <s> ^thirsty yes)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name thirsty)
+}
+
+sp {apply*thirsty
+    (state <s> ^operator <op>)
+    (<op> ^name thirsty)
+-->
+   (<s> ^thirsty no)
+}
+
+sp {propose*complete
+    (state <s> ^hungry no
+               ^thirsty no)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name complete)
+}
+
+sp {apply*complete
+    (state <s> ^operator <op>)
+    (<op> ^name complete)
+-->
+   (write (crlf) |Complete|)
+}

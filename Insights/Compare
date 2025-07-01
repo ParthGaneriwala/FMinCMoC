@@ -1,0 +1,49 @@
+TRANS
+        next (state_operator_name) =
+            case
+             (state = run 
+             & state_gps-error-info_warn-condition = high 
+             & state_operator_name = combined-warn-propose-do-not-warn-propose)
+             : warn;
+             (state = run & state_gps-error-info_warn-condition = high & state_operator_name = combined-warn-propose-do-not-warn-propose): do-not-warn;
+             (state = run & state_gps-error-info_warn-condition = low & state_operator_name = combined-warn-propose-do-not-warn-propose): warn;
+             (state = run & state_gps-error-info_warn-condition = low & state_operator_name = combined-warn-propose-do-not-warn-propose): do-not-warn;
+        TRUE : state_operator_name;
+    esac;
+
+
+(p warn-high-gps
+   =goal>
+   isa eval-sensor
+   state high
+==>
+   =goal>
+   state warn-high
+)
+
+(p no-warn-high-gps
+   =goal>
+   isa eval-sensor
+   state high
+==>
+   =goal>
+   state do-not-warn-high
+)
+
+(p warn-low-gps
+   =goal>
+   isa eval-sensor
+   state low
+==>
+   =goal>
+   state warn-low
+)
+
+(p no-warn-low-gps
+   =goal>
+   isa eval-sensor
+   state low
+==>
+   =goal>
+   state do-not-warn-low
+)

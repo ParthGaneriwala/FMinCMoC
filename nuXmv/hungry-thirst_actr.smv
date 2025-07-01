@@ -1,0 +1,39 @@
+MODULE main
+
+VAR goal : boolean;
+VAR goal_hungry : {yes, no};
+VAR goal_thirsty : {yes, no};
+
+VAR actrAgent : actrProd(goal, goal_hungry, goal_thirsty);
+
+MODULE actrProd(goal, goal_hungry, goal_thirsty)
+
+ASSIGN
+    init (goal_hungry) := yes;
+    init (goal_thirsty) := yes;
+    init (goal) := TRUE;
+
+
+TRANS
+        next (goal_hungry) =
+        case
+        --eat
+        (goal = TRUE & goal_hungry = yes): no;
+            TRUE : goal_hungry;
+                esac;
+
+TRANS
+        next (goal_thirsty) =
+        case
+        --drink
+        (goal = TRUE & goal_thirsty = yes): no;
+            TRUE : goal_thirsty;
+                esac;
+
+TRANS
+        next (goal) =
+        case
+        --complete
+        (goal = TRUE & goal_thirsty = no & goal_hungry = no): FALSE;
+            TRUE : goal;
+                esac;                

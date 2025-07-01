@@ -1,0 +1,68 @@
+MODULE main
+
+VAR state_superstate : {nil};
+VAR state_hungry : {nil, yes, no};
+VAR state_thirsty : {nil, yes, no};
+VAR state_operator_name : {nil, initialize,hungry,thirsty,complete};
+
+ASSIGN
+    init (state_hungry) := nil;
+    init (state_thirsty) := nil;
+    init (state_operator_name) := nil;
+    -- init ($var_name) := $var_init_value;
+
+VAR soarAgent : soarRules(state_superstate, state_operator_name, state_hungry, state_thirsty);
+
+MODULE soarRules(state_superstate, state_operator_name, state_hungry, state_thirsty)
+
+VAR state:{start, run};
+
+ASSIGN
+        init (state) := start;
+        next (state) :=
+            case
+        --propose*initialize ()
+        state = start & (state_superstate = nil & state_hungry = nil & state_thirsty = nil) : run;
+        --propose*hungry ()
+        state = start & (state_hungry = yes) : run;
+        --propose*thirsty ()
+        state = start & (state_thirsty = yes) : run;
+        --propose*complete ()
+        state = start & (state_hungry = no & state_thirsty = no) : run; 
+        
+        state = run : start;
+            TRUE : state;
+            esac;
+            
+TRANS
+        next (state_operator_name) =
+            case
+        --apply*initialize ()
+        (state = run & state_superstate = nil & state_hungry = nil & state_thirsty = nil): initialize;
+        --apply*hungry ()
+        (state = run & (state_hungry = yes)) : hungry;
+        --apply*thirsty ()        
+        (state = run & (state_thirsty = yes)) : thirsty;
+        --apply*complete ()
+        (state = run & (state_hungry = no & state_thirsty = no)) : complete; 
+        TRUE : state_operator_name;
+                esac;
+TRANS
+        next (state_hungry) =
+            case
+        --apply*initialize ()
+        (state = start & state_operator_name = initialize): yes;
+        --apply*hungry ()
+        (state = start & state_operator_name = hungry): no;
+            TRUE : state_hungry;
+                esac;
+
+TRANS
+        next (state_thirsty) =
+            case
+        --apply*initialize (state_operator_name)
+        (state = start & state_operator_name = initialize): yes;
+        --apply*thirsty ()
+        (state = start & state_operator_name = thirsty): no;
+            TRUE : state_thirsty;
+                esac;

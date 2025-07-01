@@ -1,0 +1,143 @@
+# SOAR Production for Fan Effect Experiment
+waitsnc --on
+decide indifferent-selection --first
+
+sp {propose*initialize-data
+   (state <s> ^operator <op> <op>)
+-->
+   (<op> ^name initialize-data)
+}
+
+sp {apply*initialize-data
+   (state <s> ^operator <op> +)
+   (<op> ^name initialize-data)
+-->
+   (<s> ^persons <p1> <p2> <p3> <p4> <p5> <p6> <p7> <p8>
+        ^locations <l1> <l2> <l3> <l4> <l5> <l6> <l7> <l8> <l9>
+        ^person-location-pairs
+         <pp1> <pp2> <pp3> <pp4> <pp5> <pp6>
+         <pp7> <pp8> <pp9> <pp10> <pp11> <pp12> <pp13>)
+   (<p1> ^name hippie)
+   (<p2> ^name captain)
+   (<p3> ^name debutante)
+   (<p4> ^name fireman)
+   (<p5> ^name giant)
+   (<p6> ^name earl)
+   (<p7> ^name lawyer)
+   (<l1> ^name park)
+   (<l2> ^name church)
+   (<l3> ^name bank)
+   (<l4> ^name cave)
+   (<l5> ^name beach)
+   (<l6> ^name castle)
+   (<l7> ^name forest)
+   (<l8> ^name store)
+   (<l9> ^name dungeon)
+   (<pp1> ^person <p1> ^location <l1>)
+   (<pp2> ^person <p1> ^location <l2>)
+   (<pp3> ^person <p1> ^location <l3>)
+   (<pp4> ^person <p2> ^location <l1>)
+   (<pp5> ^person <p2> ^location <l4>)
+   (<pp6> ^person <p3> ^location <l1>)
+   (<pp7> ^person <p4> ^location <l2>)
+   (<pp8> ^person <p5> ^location <l5>)
+   (<pp9> ^person <p5> ^location <l6>)
+   (<pp10> ^person <p5> ^location <l9>)
+   (<pp11> ^person <p6> ^location <l6>)
+   (<pp12> ^person <p6> ^location <l7>)
+   (<pp13> ^person <p7> ^location <l8>)    
+}
+
+# Perception and encoding
+sp {propose*encode-stimuli
+   (state <s> ^operator.name nil
+              ^person <person>
+              ^location <location>)
+-->
+   (<s> ^operator <op> + <)
+   (<op> ^name encode-stimuli
+         ^person <person>
+         ^location <location>)
+}
+
+# Retrieval and response
+sp {propose*retrieve-association
+   (state <s> ^operator <op>
+              ^person <person>
+              ^location <location>
+              ^person-location-pairs <pairs>)
+   (<op> ^name encode-stimuli)
+-->
+   (<s> ^operator <op> +)
+   (<op> ^name retrieve-association
+         ^person <person>
+         ^location <location>
+         ^pairs <pairs>)
+}
+
+sp {apply*retrieve-association
+   (state <s> ^operator <op>
+              ^person <person>
+              ^location <location>
+              ^person-location-pairs <pairs>)
+   (<op> ^name retrieve-association
+         ^person <person>
+         ^location <location>
+         ^pairs <pairs>)
+   (<pairs> ^person <person>
+            ^location <location>)
+-->
+   (write (crlf) |Person | <person> | is in | <location>)
+   (<s> ^operator <op> +)
+   (<op> ^name respond
+         ^response yes)
+}
+
+sp {apply*retrieve-association*no-match
+   (state <s> ^operator <op>
+              ^person <person>
+              ^location <location>
+              ^person-location-pairs <pairs>)
+   (<op> ^name retrieve-association
+         ^person <person>
+         ^location <location>
+         ^pairs <pairs>)
+   (<pairs> ^person <person>
+           -^location <location>)
+-->
+   (write (crlf) |Person | <person> | is not in | <location>)
+   (<s> ^operator <op> +)
+   (<op> ^name respond
+         ^response no)
+}
+
+# Response generation
+sp {propose*generate-response
+   (state <s> ^operator <op>)
+   (<op> ^name respond
+         ^response <response>)
+-->
+   (<s> ^operator <op> +)
+   (<op> ^name generate-response
+         ^response <response>)
+}
+
+sp {apply*generate-response*yes
+   (state <s> ^operator <op>
+              ^io.output-link <output-link>)
+   (<op> ^name generate-response
+         ^response yes)
+-->
+   (write (crlf) |Responding: | (kbd k))
+   (<output-link> ^k)
+}
+
+sp {apply*generate-response*no
+   (state <s> ^operator <op>
+              ^io.output-link <output-link>)
+   (<op> ^name generate-response
+         ^response no)
+-->
+   (write (crlf) |Responding: | (kbd d))
+   (<output-link> ^d)
+}
