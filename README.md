@@ -6,15 +6,6 @@
 
 FMinCMoC is a research initiative focused on integrating formal verification techniques into cognitive modeling. By translating cognitive models from architectures like ACT-R and Soar into formal representations compatible with model checkers such as nuXmv, this project facilitates rigorous analysis and verification of cognitive behavior.
 
-## 📁 Repository Structure
-
-FMinCMoC/
-├── ACTR/ # ACT-R models and related resources
-├── Soar/ # Soar models and associated files
-├── nuXmv/ # Translated models for nuXmv verification
-├── LICENSE # MIT License
-└── README.md # Project documentation
-
 
 ## 🔧 Features
 
