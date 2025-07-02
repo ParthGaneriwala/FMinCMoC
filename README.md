@@ -31,11 +31,11 @@ Use provided prompt templates or code to translate cognitive models to nuXmv/.
 
 Run nuXmv on translated files to verify desired specifications.
 
-📄 License
+## 📄 License
 This project is licensed under the MIT License.
 
-🤝 Contributing
+## 🤝 Contributing
 Contributions, forks, and collaborations are welcome. Please open an issue or submit a pull request to contribute.
 
-📬 Contact
+## 📬 Contact
 For questions or collaborations, contact Parth Ganeriwala.
