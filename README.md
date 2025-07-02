@@ -1,50 +1,50 @@
-FMinCMoC
-Formal Verification in the Common Model of Cognition (CMoC)
+# FMinCMoC
 
-🧠 Overview
-FMinCMoC is a research initiative aimed at integrating formal verification techniques into cognitive modeling. By translating cognitive models from architectures like ACT-R and Soar into formal representations compatible with model checkers such as nuXmv, this project facilitates rigorous analysis and verification of cognitive models.
+**Formal Verification in the Common Model of Cognition (CMoC)**
 
-📁 Repository Structure
-bash
-Copy
-Edit
+## 🧠 Overview
+
+FMinCMoC is a research initiative focused on integrating formal verification techniques into cognitive modeling. By translating cognitive models from architectures like ACT-R and Soar into formal representations compatible with model checkers such as nuXmv, this project facilitates rigorous analysis and verification of cognitive behavior.
+
+## 📁 Repository Structure
+
 FMinCMoC/
-├── ACTR/       # ACT-R models and related resources
-├── Soar/       # Soar models and associated files
-├── nuXmv/      # Translated models for nuXmv verification
-├── LICENSE     # MIT License
-└── README.md   # Project documentation
-🔧 Features
-ACT-R and Soar Models: Contains cognitive models developed in ACT-R and Soar architectures.
+├── ACTR/ # ACT-R models and related resources
+├── Soar/ # Soar models and associated files
+├── nuXmv/ # Translated models for nuXmv verification
+├── LICENSE # MIT License
+└── README.md # Project documentation
 
-Translation to nuXmv: Provides translated versions of cognitive models into the nuXmv format for formal verification.
 
-Formal Verification: Enables the use of model checking tools to verify properties of cognitive models, ensuring their correctness and reliability.
+## 🔧 Features
 
-🚀 Getting Started
-Clone the Repository:
+- **ACT-R and Soar Models**: Cognitive models that simulate procedural and declarative knowledge representations.
+- **Translation to nuXmv**: Automated or assisted transformation of models into nuXmv syntax for formal property checking.
+- **Formal Verification**: Enables model checking of cognitive systems using symbolic tools like nuXmv to verify liveness, safety, and temporal properties.
 
-bash
-Copy
-Edit
-git clone https://github.com/ParthGaneriwala/FMinCMoC.git
-Explore Cognitive Models:
+## 🚀 Getting Started
 
-Navigate to the ACTR/ or Soar/ directories to examine the cognitive models.
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/ParthGaneriwala/FMinCMoC.git
 
-Translate Models:
+2. Explore Cognitive Models:
 
-Use the provided scripts or tools to translate models into the nuXmv/ format.
+Navigate to the ACTR/ or Soar/ folders for original models.
 
-Perform Formal Verification:
+3. Translate Models:
 
-Utilize the nuXmv model checker to verify properties of the translated models.
+Use provided prompt templates or code to translate cognitive models to nuXmv/.
+
+4. Verify with nuXmv:
+
+Run nuXmv on translated files to verify desired specifications.
 
 📄 License
-This project is licensed under the MIT License, allowing for flexible use and modification.
+This project is licensed under the MIT License.
 
 🤝 Contributing
-Contributions are welcome! If you have suggestions or improvements, please submit a pull request or open an issue.
+Contributions, forks, and collaborations are welcome. Please open an issue or submit a pull request to contribute.
 
 📬 Contact
-For questions or collaborations, please contact Parth Ganeriwala.
+For questions or collaborations, contact Parth Ganeriwala.
